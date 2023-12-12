@@ -7,7 +7,7 @@ def importData(path):
     file.close()
     return(data)
 
-pathFile = "C:/Users/svenw/Documents/ProgrammeerProjecten/Advent/2023/day06/input.txt"
+pathFile = # path
 data = importData(pathFile)
 
 def removeSpacesList(list):
