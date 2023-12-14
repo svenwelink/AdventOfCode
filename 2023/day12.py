@@ -59,25 +59,25 @@ def getAllPosibleFieldStrings(fieldString):
     countQuestionMark = fieldStringAsList.count("?")
 
     for x in range(2 ** countQuestionMark):
-        copyString = fieldStringAsList
+        copyString = fieldStringAsList.copy()
         binaryNumberString = str(bin(x))[2:]
         binaryNumberString = binaryNumberString.zfill(countQuestionMark)
-        print(binaryNumberString[0])
+        
         countQuestionMarksReplaced = 0
-        for i in range(len(copyString)):
+        for i in range(len(fieldStringAsList)):
             if copyString[i] == "?":
                 if binaryNumberString[countQuestionMarksReplaced] == "0":
                     copyString[i] = "."
-                    print("TESTS")
                 else:
                     copyString[i] = "#"
-                    print("TESTS")
                 countQuestionMarksReplaced = countQuestionMarksReplaced + 1
             
         fieldStrings.append(copyString)
 
     return(fieldStrings)
 
-getAllPosibleFieldStrings("??#..#")
+print("Part one")
+print("Test:", runPartOne(test))
+print("Result:", runPartOne(data))
 
-# Still needs some work
+# Part 2 still needs work
