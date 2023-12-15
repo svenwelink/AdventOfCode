@@ -39,11 +39,37 @@ print("Part 1")
 print("Test:", runPartOne(test))
 print("Result:", runPartOne(data))
 
+# Part 2
+
 def makeEmptyList(length = 256):
     emptyList = []
     for i in range(length):
         emptyList.append([])
     return(emptyList)
+
+def removeFromBox(boxes, lensNames, currentValue, string, charId):
+    boxNumber = currentValue
+
+    if string[:charId] in lensNames[boxNumber]:
+        placeInBox = lensNames[boxNumber].index(string[:charId])
+        del boxes[boxNumber][placeInBox]
+        del lensNames[boxNumber][placeInBox]
+
+    return(boxes, lensNames)
+
+def addLensToBox(boxes, lensNames, currentValue, string, charId):
+    boxNumber = currentValue
+
+    if string[:charId] in lensNames[boxNumber]:
+        placeInBox = lensNames[boxNumber].index(string[:charId])
+        boxes[boxNumber][placeInBox] = int(string[charId + 1])
+        lensNames[boxNumber][placeInBox] = string[:charId]         
+    else:
+        boxes[boxNumber].append(int(string[charId + 1]))
+        lensNames[boxNumber].append(string[:charId])
+
+    return(boxes, lensNames)
+
 
 def getAllBoxesWithLens(data):
     data = makeList(data)
@@ -51,26 +77,13 @@ def getAllBoxesWithLens(data):
     boxes, lensNames = makeEmptyList(), makeEmptyList()
     for string in data:
         currentValue, boxNumber = 0, -1
+
         for charId in range(len(string)):
             if string[charId] == "-":
-                boxNumber = currentValue
-
-                if string[:charId] in lensNames[boxNumber]:
-                    placeInBox = lensNames[boxNumber].index(string[:charId])
-                    del boxes[boxNumber][placeInBox]
-                    del lensNames[boxNumber][placeInBox]
+                boxes, lensNames = removeFromBox(boxes, lensNames, currentValue, string, charId)
 
             elif string[charId] == "=":
-                boxNumber = currentValue
-
-                if string[:charId] in lensNames[boxNumber]:
-                    placeInBox = lensNames[boxNumber].index(string[:charId])
-                    boxes[boxNumber][placeInBox] = int(string[charId + 1])
-                    lensNames[boxNumber][placeInBox] = string[:charId]
-               
-                else:
-                    boxes[boxNumber].append(int(string[charId + 1]))
-                    lensNames[boxNumber].append(string[:charId])
+                boxes, lensNames = addLensToBox(boxes, lensNames, currentValue, string, charId)
 
             elif boxNumber == -1:
                 currentValue = calculateNextValue(currentValue, string[charId])
