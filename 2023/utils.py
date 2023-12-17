@@ -6,10 +6,24 @@ def importData(path):
     file.close()
     return(data)
 
-pathFileData = #path
-pathFileTestData = #path
+pathFileData = # path
+pathFileTestData = # path
 data = importData(pathFileData)
 test = importData(pathFileTestData)
+
+def getRawFrame(data):
+    frame = []
+    for i in range(len(data)):
+        rowFrame = []
+        row = r"{}".format(data[i]).strip()
+        
+        for j in range(len(row)):
+            if len(row[j]) > 0:
+                rowFrame.append(row[j])
+
+        frame.append(rowFrame)
+
+    return(frame)
 
 def removeSpacesList(list):
     list = ' '.join(list).split()
@@ -24,3 +38,12 @@ def getProductFromList(listProduct):
     for i in listProduct:
         product = product * i
     return(product) 
+
+def transposeList(frame):
+  transposedFrame = []
+  for columnId in range(len(frame[0])):
+    newRow = ""
+    for rowId in range(len(frame)):
+      newRow += frame[rowId][columnId]
+    transposedFrame.append(newRow)
+  return(transposedFrame)
