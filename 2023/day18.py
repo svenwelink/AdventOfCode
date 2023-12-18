@@ -7,8 +7,8 @@ def importData(path):
     file.close()
     return(data)
 
-pathFileData = "C:/Users/svenw/Documents/ProgrammeerProjecten/Advent/2023/day18/input.txt"
-pathFileTestData = "C:/Users/svenw/Documents/ProgrammeerProjecten/Advent/2023/day18/inputTest.txt"
+pathFileData = # path
+pathFileTestData = # path
 data = importData(pathFileData)
 test = importData(pathFileTestData)
 
