@@ -1,4 +1,4 @@
-# Dy 18
+# Day 18
 print("Day 18")
 
 def importData(path):
