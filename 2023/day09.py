@@ -1,14 +1,7 @@
-# Import data
-def importData(path):
-    file = open(path,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
+import utils
 
-pathFileData = # path
-pathFileTestData = # path
-data = importData(pathFileData)
-test = importData(pathFileTestData)
+test = utils.importData("2023/TestInput/day09.txt")
+data = utils.importData("2023/Input/day09.txt")
 
 def getNextNumberList(inputList):
     if len(set(inputList)) == 1:
