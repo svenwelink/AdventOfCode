@@ -1,18 +1,11 @@
+import utils
+
+test = utils.importData("2023/TestInput/day08.txt")
+data = utils.importData("2023/Input/day08.txt")
 # Day 8
 print("Day 8")
 
 finalPosition = 'ZZZ'
-
-def importData(path):
-    file = open(path,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
-
-pathFileData = # path
-pathFileTestData = # Path
-data = importData(pathFileData)
-test = importData(pathFileTestData)
 
 def makeMappingLists(data):
     mapNameList, mapDirectionList = [], []
@@ -45,8 +38,7 @@ def runPartOne(data, position = 'AAA'):
     return(stepsDone)
 
 print("Part one")
-resultOne = runPartOne(data)
-print("Result:", resultOne)
+print("Result:", runPartOne(data))
 
 # Part 2
 # Still needs some work
