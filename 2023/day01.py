@@ -1,11 +1,8 @@
-# Day 01
-# Part 1
-# Functions
-def importData(path):
-    file = open(pathFile,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
+# Day 1
+import utils
+
+test = utils.importData("2023/TestInput/day01.txt")
+data = utils.importData("2023/Input/day01.txt")
 
 def getFirstNumber(string):
     for i in range(0, len(string)):
@@ -17,7 +14,7 @@ def getSecondNumber(string):
         if string[i].isnumeric():
             return(int(string[i]))
         
-def runPart1():
+def runPart1(data):
     totalSum = int(0)
     for lineIndex in range(0, len(data)):
         line = data[lineIndex]
@@ -25,15 +22,9 @@ def runPart1():
     return(totalSum)
 
 # Execute
-print("Day 1")
-
-# Import data
-pathFile = # Path to data
-data = importData(pathFile)
-
-resultPart1 = runPart1()
 print("Part 1")
-print(resultPart1)
+print("Test:", runPart1(test))
+print("Data:", runPart1(data))
 
 # Part 2
 # Functions
@@ -57,7 +48,7 @@ def getSecondNumberPart2(string):
                 if string[i-len(numberText):i] == numberText:
                     return(numbersText.index(numberText) + 1) 
 
-def runPart2():
+def runPart2(data):
     totalSum = int(0)
     for lineIndex in range(0, len(data)):
         line = data[lineIndex]
@@ -65,6 +56,6 @@ def runPart2():
     return(totalSum)
 
 # Execute
-resultPart2 = runPart2()
 print("Part 2")
-print(resultPart2)
+print("Test:", runPart2(test))
+print("Data:", runPart2(data))
