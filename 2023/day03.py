@@ -1,14 +1,10 @@
+import utils
+
+test = utils.importData("2023/TestInput/day03.txt")
+data = utils.importData("2023/Input/day03.txt")
+
 # Day 3
 print("Day 3")
-# Import data
-def importData(path):
-    file = open(pathFile,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
-
-pathFile = # path
-data = importData(pathFile)
 
 nRows, nCols = len(data), len(data[0]) - 1
 
