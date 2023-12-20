@@ -1,16 +1,10 @@
 # Day 10
 print("Day 10")
 
-def importData(path):
-    file = open(path,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
+import utils
 
-pathFileData = # Path
-pathFileTestData = # Path
-data = importData(pathFileData)
-test = importData(pathFileTestData)
+test = utils.importData("2023/TestInput/day.txt")
+data = utils.importData("2023/Input/day.txt")
 
 def getGridAndStartPos(data):
     df = []
