@@ -1,14 +1,10 @@
 # Day 6
 print("Day 6")
 
-def importData(path):
-    file = open(pathFile,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
+import utils
 
-pathFile = # path
-data = importData(pathFile)
+test = utils.importData("2023/TestInput/day06.txt")
+data = utils.importData("2023/Input/day06.txt")
 
 def removeSpacesList(list):
     list = ' '.join(list).split()
