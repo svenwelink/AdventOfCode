@@ -1,17 +1,10 @@
 # Day 7
 
 import pandas as pd
+import utils
 
-def importData(path):
-    file = open(path,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
-
-pathFileData = # path
-pathFileTestData = # path
-inputData = importData(pathFileData)
-testData = importData(pathFileTestData)
+test = utils.importData("2023/TestInput/day07.txt")
+data = utils.importData("2023/Input/day07.txt")
 
 print("Day 7")
 
