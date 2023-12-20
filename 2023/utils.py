@@ -1,15 +1,8 @@
-# Changed since day 7 into loading both files
-# Import data
 def importData(path):
     file = open(path,'r')
     data = file.readlines()
     file.close()
     return(data)
-
-pathFileData = # path
-pathFileTestData = # path
-data = importData(pathFileData)
-test = importData(pathFileTestData)
 
 def getRawFrame(data):
     frame = []
@@ -20,9 +13,8 @@ def getRawFrame(data):
         for j in range(len(row)):
             if len(row[j]) > 0:
                 rowFrame.append(row[j])
-
+                
         frame.append(rowFrame)
-
     return(frame)
 
 def removeSpacesList(list):
