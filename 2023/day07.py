@@ -89,9 +89,9 @@ def calculateWinnigs(row):
     return(winnings)
 
 print("Part 1")
-testResultOne = runPartOne(testData)
+testResultOne = runPartOne(test)
 print("Test result:", testResultOne)
-resultOne = runPartOne(inputData)
+resultOne = runPartOne(data)
 print("Result:", resultOne)
 
 # Part 2
@@ -181,7 +181,7 @@ def runPartTwo(data):
     return(totalWinnigs)
 
 print("Part 2")
-testResultTwo = runPartTwo(testData)
+testResultTwo = runPartTwo(test)
 print("Test result:", testResultTwo)
-resultTwo = runPartTwo(inputData)
+resultTwo = runPartTwo(data)
 print("Result:", resultTwo)
