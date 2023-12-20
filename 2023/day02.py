@@ -1,13 +1,8 @@
 # Day 2
-# Import data
-def importData(path):
-    file = open(pathFile,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
+import utils
 
-pathFile = #Data path
-data = importData(pathFile)
+test = utils.importData("2023/TestInput/day02.txt")
+data = utils.importData("2023/Input/day02.txt")
 
 resetValue, nextValue = ";", ","
 
