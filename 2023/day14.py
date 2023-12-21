@@ -1,17 +1,10 @@
 # Day 14
 print("Day 14")
 
-# Import data
-def importData(path):
-    file = open(path,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
+import utils
 
-pathFileData = "C:/Users/svenw/Documents/ProgrammeerProjecten/Advent/2023/day14/input.txt"
-pathFileTestData = "C:/Users/svenw/Documents/ProgrammeerProjecten/Advent/2023/day14/inputTest.txt"
-data = importData(pathFileData)
-test = importData(pathFileTestData)
+test = utils.importData("2023/TestInput/day14.txt")
+data = utils.importData("2023/Input/day14.txt")
 
 pillar = "#"
 rock = "O"
