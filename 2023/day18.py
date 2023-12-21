@@ -1,16 +1,10 @@
 # Day 18
 print("Day 18")
 
-def importData(path):
-    file = open(path,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
+import utils
 
-pathFileData = # path
-pathFileTestData = # path
-data = importData(pathFileData)
-test = importData(pathFileTestData)
+test = utils.importData("2023/TestInput/day18.txt")
+data = utils.importData("2023/Input/day18.txt")
 
 def getLists(data):
     dataList = []
