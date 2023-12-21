@@ -2,18 +2,10 @@
 print("Day 11")
 
 import numpy as np
+import utils
 
-# Import data
-def importData(path):
-    file = open(path,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
-
-pathFileData = # path
-pathFileTestData = # path
-data = importData(pathFileData)
-test = importData(pathFileTestData)
+test = utils.importData("2023/TestInput/day11.txt")
+data = utils.importData("2023/Input/day11.txt")
 
 def runPartOne(data):
     extraRows, extraColumns = getRowsToDouble(data), getColumnsToDouble(data)
