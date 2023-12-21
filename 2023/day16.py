@@ -1,17 +1,10 @@
 # Day 16
 print("Day 16")
 
-# Import data
-def importData(path):
-    file = open(path,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
+import utils
 
-pathFileData = "C:/Users/svenw/Documents/ProgrammeerProjecten/Advent/2023/day16/input.txt"
-pathFileTestData = "C:/Users/svenw/Documents/ProgrammeerProjecten/Advent/2023/day16/inputTest.txt"
-data = importData(pathFileData)
-test = importData(pathFileTestData)
+test = utils.importData("2023/TestInput/day16.txt")
+data = utils.importData("2023/Input/day16.txt")
 
 def getFrame(data):
     frame = []
@@ -63,9 +56,6 @@ def getFirstNextPos(startPos, bounds):
 def runPartOne(data):
     dataFrame = getFrame(data)
     ligthFrame = runLigthTroughFrame(dataFrame, [0, -1])
-
-    
-
     return(ligthFrame)
 
 print(runPartOne(test))
