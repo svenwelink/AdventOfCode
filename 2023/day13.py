@@ -1,18 +1,11 @@
 # Day 13
 print("Day 13")
-# Import data
-def importData(path):
-    file = open(path,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
-
-pathFileData = # Path
-pathFileTestData = # Path
-data = importData(pathFileData)
-test = importData(pathFileTestData)
 
 import numpy as np
+import utils
+
+test = utils.importData("2023/TestInput/day13.txt")
+data = utils.importData("2023/Input/day13.txt")
 
 def runPartOne(data):
   mirrorPoints = 0
