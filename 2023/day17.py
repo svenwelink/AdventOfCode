@@ -1,15 +1,10 @@
 # Day 17 
 print("Day 17")
-def importData(path):
-    file = open(path,'r')
-    data = file.readlines()
-    file.close()
-    return(data)
 
-pathFileData = # path
-pathFileTestData = # path
-data = importData(pathFileData)
-test = importData(pathFileTestData)
+import utils
+
+test = utils.importData("2023/TestInput/day17.txt")
+data = utils.importData("2023/Input/day17.txt")
 
 def changeStringListToInterger(numberList):
     numberList = list(map(int, numberList))
