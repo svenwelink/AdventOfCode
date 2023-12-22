@@ -18,88 +18,73 @@ def getLightFrame(dataFrame):
 def runLigthTroughFrame(frame, lastPosMinusOne):
     lightFrame, bounds = getLightFrame(frame), getBounds(frame)
     lastPos, lightFrame = getFirstNextPos(lastPosMinusOne, bounds, lightFrame)
-    posToGetNextList, fullCircleList = [[lastPosMinusOne, lastPos]], []
+    posToGetNextList, fullCircleList = [lastPos], []
 
     while len(posToGetNextList) > 0:
         lightFrame, posToGetNextList, fullCircleList = getNextPositions(lightFrame, posToGetNextList, fullCircleList, frame, bounds)
-        
-        # for i in range(len(lightFrame)):
-        #     print(lightFrame[i])
-        # print("")
-        # test = input(" Press enter")
+
     return(lightFrame)
 
 def getNextPositions(lightFrame, posToGetNextList, fullCircleList, frame, bounds):
     newPosToGetNextList = []
     
     for positionToCheck in posToGetNextList:
-        lastPos, currentPos = positionToCheck[0], positionToCheck[1]
-        if frame[currentPos[0]][currentPos[1]] == ".":
-            newPosToGetNextList, lightFrame = nextPosDot(lastPos, currentPos, newPosToGetNextList, lightFrame, bounds)
-        elif frame[currentPos[0]][currentPos[1]] == "/":
-            newPosToGetNextList, lightFrame = nextPosForwardSlash(lastPos, currentPos, newPosToGetNextList, lightFrame, bounds)
-        elif frame[currentPos[0]][currentPos[1]] == "\\":
-            newPosToGetNextList, lightFrame = nextPosBackSlash(lastPos, currentPos, newPosToGetNextList, lightFrame, bounds)
-        elif frame[currentPos[0]][currentPos[1]] == "-":
-            newPosToGetNextList, lightFrame, fullCircleList = nextPosVerticalSplitter(lastPos, currentPos, newPosToGetNextList, lightFrame, bounds, fullCircleList)
-        elif frame[currentPos[0]][currentPos[1]] == "|":    
-            newPosToGetNextList, lightFrame, fullCircleList = nextPosHorizontalSplitter(lastPos, currentPos, newPosToGetNextList, lightFrame, bounds, fullCircleList)
+        if frame[positionToCheck[0]][positionToCheck[1]] == ".":
+            newPosToGetNextList, lightFrame = moveToNextPosition(positionToCheck, newPosToGetNextList, lightFrame, bounds)
+        elif frame[positionToCheck[0]][positionToCheck[1]] == "/":
+            newPosToGetNextList, lightFrame = nextPosForwardSlash(positionToCheck, newPosToGetNextList, lightFrame, bounds)
+        elif frame[positionToCheck[0]][positionToCheck[1]] == "\\":
+            newPosToGetNextList, lightFrame = nextPosBackSlash(positionToCheck, newPosToGetNextList, lightFrame, bounds)
+        elif frame[positionToCheck[0]][positionToCheck[1]] == "-":
+            newPosToGetNextList, lightFrame, fullCircleList = nextPosVerticalSplitter(positionToCheck, newPosToGetNextList, lightFrame, bounds, fullCircleList)
+        elif frame[positionToCheck[0]][positionToCheck[1]] == "|":    
+            newPosToGetNextList, lightFrame, fullCircleList = nextPosHorizontalSplitter(positionToCheck, newPosToGetNextList, lightFrame, bounds, fullCircleList)
 
     return(lightFrame, newPosToGetNextList, fullCircleList)
 
-def nextPosDot(lastPos, currentPos, newPosToGetNextList, lightFrame, bounds):
-    # If x-axis is the same
-    if currentPos[0] == lastPos[0]:
-        nextPos = [currentPos[0], currentPos[1] + currentPos[1] - lastPos[1]]
-    # Else y-axis is the same
-    else:
-        nextPos = [currentPos[0] + currentPos[0] - lastPos[0], currentPos[1]]
-            
+def moveToNextPosition(currentPos, newPosToGetNextList, lightFrame, bounds):
+    if currentPos[2] == "Down": 
+        nextPos = [currentPos[0] + 1, currentPos[1], currentPos[2]]
+    elif currentPos[2] == "Up": 
+        nextPos = [currentPos[0] - 1, currentPos[1], currentPos[2]]
+    elif currentPos[2] == "Left": 
+        nextPos = [currentPos[0], currentPos[1] - 1, currentPos[2]]
+    elif currentPos[2] == "Right": 
+        nextPos = [currentPos[0], currentPos[1] + 1, currentPos[2]]
+
     if notInBounds(nextPos, bounds):
-        newPosToGetNextList.append([currentPos, nextPos])
+        newPosToGetNextList.append(nextPos)
         lightFrame[nextPos[0]][nextPos[1]] = 1
 
     return(newPosToGetNextList, lightFrame)
 
-def nextPosForwardSlash(lastPos, currentPos, newPosToGetNextList, lightFrame, bounds):
+def nextPosForwardSlash(currentPos, newPosToGetNextList, lightFrame, bounds):
     # /
-    # If x-axis is the same 
-    if currentPos[0] == lastPos[0]:
-        if currentPos[1] > lastPos[1]: # From left
-            nextPos = [currentPos[0] - 1, currentPos[1]]
-        else: # From right
-            nextPos = [currentPos[0] + 1, currentPos[1]]
-    # Else y-axis is the same
-    else:
-        if currentPos[0] > lastPos[0]: # From above
-            nextPos = [currentPos[0], currentPos[1] - 1]
-        else: # From below
-            nextPos = [currentPos[0], currentPos[1] + 1]
-            
-    if notInBounds(nextPos, bounds):
-        newPosToGetNextList.append([currentPos, nextPos])
-        lightFrame[nextPos[0]][nextPos[1]] = 1
+    if currentPos[2] == "Up":
+        currentPos[2] = "Right"
+    elif currentPos[2] == "Down":
+        currentPos[2] = "Left"
+    elif currentPos[2] == "Left":
+        currentPos[2] = "Down"
+    elif currentPos[2] == "Right":
+        currentPos[2] = "Up"
+
+    newPosToGetNextList, lightFrame = moveToNextPosition(currentPos, newPosToGetNextList, lightFrame, bounds)
 
     return(newPosToGetNextList, lightFrame)
 
-def nextPosBackSlash(lastPos, currentPos, newPosToGetNextList, lightFrame, bounds):
+def nextPosBackSlash(currentPos, newPosToGetNextList, lightFrame, bounds):
     # \
-    # If x-axis is the same 
-    if currentPos[0] == lastPos[0]:
-        if currentPos[1] > lastPos[1]: # From left
-            nextPos = [currentPos[0] + 1, currentPos[1]]
-        else: # From right
-            nextPos = [currentPos[0] - 1, currentPos[1]]
-    # Else y-axis is the same
-    else:
-        if currentPos[0] > lastPos[0]: # From above
-            nextPos = [currentPos[0], currentPos[1] + 1]
-        else: # From below
-            nextPos = [currentPos[0], currentPos[1] - 1]
-            
-    if notInBounds(nextPos, bounds):
-        newPosToGetNextList.append([currentPos, nextPos])
-        lightFrame[nextPos[0]][nextPos[1]] = 1
+    if currentPos[2] == "Up":
+        currentPos[2] = "Left"
+    elif currentPos[2] == "Down":
+        currentPos[2] = "Right"
+    elif currentPos[2] == "Left":
+        currentPos[2] = "Up"
+    elif currentPos[2] == "Right":
+        currentPos[2] = "Down"
+
+    newPosToGetNextList, lightFrame = moveToNextPosition(currentPos, newPosToGetNextList, lightFrame, bounds)
         
     return(newPosToGetNextList, lightFrame)
 
@@ -108,35 +93,44 @@ def notInFullCirleList(pos, fullCircleList):
         return(False)
     return(True)
 
-def nextPosVerticalSplitter(lastPos, currentPos, newPosToGetNextList, lightFrame, bounds, fullCircleList):
+def nextPosVerticalSplitter(currentPos, newPosToGetNextList, lightFrame, bounds, fullCircleList):
     # -
-    if lastPos[0] == currentPos[0]: # Not the rightsplitter, so look at it as a dot
-        newPosToGetNextList, lightFrame = nextPosDot(lastPos, currentPos, newPosToGetNextList, lightFrame, bounds)
-    else: # Split vertical
+    if currentPos[2] == "Left" or currentPos[2] == "Right":
+        newPosToGetNextList, lightFranextPosDotme = moveToNextPosition(currentPos, newPosToGetNextList, lightFrame, bounds)
+    else:
         for i in range(-1, 2, 2):
-            nextPos = [currentPos[0], currentPos[1] + i]
+            if i == -1:
+                nextPos = [currentPos[0], currentPos[1] + i, "Left"]
+            else:
+                nextPos = [currentPos[0], currentPos[1] + i, "Right"]
+
             if notInBounds(nextPos, bounds) and notInFullCirleList(nextPos, fullCircleList):
-                newPosToGetNextList.append([currentPos, nextPos])
+                newPosToGetNextList.append(nextPos)
                 fullCircleList.append(nextPos)
                 lightFrame[nextPos[0]][nextPos[1]] = 1
 
     return(newPosToGetNextList, lightFrame, fullCircleList)
 
-def nextPosHorizontalSplitter(lastPos, currentPos, newPosToGetNextList, lightFrame, bounds, fullCircleList):
+def nextPosHorizontalSplitter(currentPos, newPosToGetNextList, lightFrame, bounds, fullCircleList):
     # | 
-    if lastPos[1] == currentPos[1]: # Not the rightsplitter, so look at it as a dot
-        newPosToGetNextList, lightFrame = nextPosDot(lastPos, currentPos, newPosToGetNextList, lightFrame, bounds)
+    if currentPos[2] == "Up" or currentPos[2] == "Down":
+        newPosToGetNextList, lightFrame = moveToNextPosition(currentPos, newPosToGetNextList, lightFrame, bounds)
     else: # Split horizontal
         for i in range(-1, 2, 2):
-            nextPos = [currentPos[0] + i, currentPos[1]]
+            if i == -1: 
+                nextPos = [currentPos[0] + i, currentPos[1], "Up"]
+            else:
+                nextPos = [currentPos[0] + i, currentPos[1], "Down"]
+
             if notInBounds(nextPos, bounds) and notInFullCirleList(nextPos, fullCircleList):
-                newPosToGetNextList.append([currentPos, nextPos])
+                newPosToGetNextList.append(nextPos)
                 fullCircleList.append(nextPos)
                 lightFrame[nextPos[0]][nextPos[1]] = 1
 
     return(newPosToGetNextList, lightFrame, fullCircleList)
 
 def notInBounds(positon, bounds):
+    # Opschonen naar nieuwe techniek
     # Out of bounds x-axis
     if positon[0] == bounds[0][0] or positon[1] == bounds[0][1]:
         return(False)
@@ -152,20 +146,20 @@ def getBounds(frame):
 
 def getFirstNextPos(startPos, bounds, lightFrame):
     if startPos[0] == bounds[0][0]:
-        nextPos = [startPos[0] + 1, startPos[1]]
+        nextPos = [startPos[0] + 1, startPos[1], "Down"]
     elif startPos[0] == bounds[1][0]:
-        nextPos = [startPos[0] - 1, startPos[1]]
+        nextPos = [startPos[0] - 1, startPos[1], "Up"]
     elif startPos[1] == bounds[0][1]:
-        nextPos = [startPos[0], startPos[1] + 1]
+        nextPos = [startPos[0], startPos[1] + 1, "Right"]
     elif startPos[1] == bounds[1][1]:
-        nextPos = [startPos[0], startPos[1] - 1]
+        nextPos = [startPos[0], startPos[1] - 1, "Left"]
 
     lightFrame[nextPos[0]][nextPos[1]] = 1
     return(nextPos, lightFrame)
 
-def runPartOne(data):
+def runPartOne(data, startPos = [0, -1]):
     dataFrame = utils.getRawFrame(data)
-    lightFrame = runLigthTroughFrame(dataFrame, [0, -1])
+    lightFrame = runLigthTroughFrame(dataFrame, startPos)
     totalSum = 0
     
     for i in range(len(lightFrame)):
