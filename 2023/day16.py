@@ -170,3 +170,32 @@ def runPartOne(data, startPos = [0, -1]):
 print("Part 1")
 print("Test:", runPartOne(test))
 print("Result:", runPartOne(data))
+
+def getStartPosList(data):
+    dataFrame = utils.getRawFrame(data)
+    bounds = getBounds(dataFrame)
+    startPosList = []
+
+    for i in range(0, bounds[1][0]):
+        startPosList.append([-1,i])
+        startPosList.append([bounds[1][0], i])
+
+    for i in range(0, bounds[1][1]):
+        startPosList.append([i,-1])
+        startPosList.append([i, bounds[1][1]])
+    return(startPosList)
+
+def runPartTwo(data):
+    startPosList = getStartPosList(data)
+    bestRun = 0
+
+    for pos in startPosList:
+        runScore = runPartOne(data, pos)
+        if runScore > bestRun:
+            bestRun = runScore
+
+    return(bestRun)
+
+print("Part 2")
+print("Test:", runPartTwo(test))
+print("Result:", runPartTwo(data))
