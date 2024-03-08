@@ -3,8 +3,8 @@ print("Day 10")
 
 import utils
 
-test = utils.importData("TestInput/day.txt")
-data = utils.importData("Input/day.txt")
+test = utils.importData("TestInput/day10.txt")
+data = utils.importData("Input/day10.txt")
 
 def getGridAndStartPos(data):
     df = []
