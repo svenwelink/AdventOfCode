@@ -3,8 +3,8 @@ print("Day 18")
 
 import utils
 
-test = utils.importData("2023/TestInput/day18.txt")
-data = utils.importData("2023/Input/day18.txt")
+test = utils.importData("TestInput/day18.txt")
+data = utils.importData("Input/day18.txt")
 
 def getLists(data):
     dataList = []
