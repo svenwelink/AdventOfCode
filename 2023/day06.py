@@ -3,8 +3,8 @@ print("Day 6")
 
 import utils
 
-test = utils.importData("2023/TestInput/day06.txt")
-data = utils.importData("2023/Input/day06.txt")
+test = utils.importData("TestInput/day06.txt")
+data = utils.importData("Input/day06.txt")
 
 def removeSpacesList(list):
     list = ' '.join(list).split()

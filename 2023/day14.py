@@ -3,8 +3,8 @@ print("Day 14")
 
 import utils
 
-test = utils.importData("2023/TestInput/day14.txt")
-data = utils.importData("2023/Input/day14.txt")
+test = utils.importData("TestInput/day14.txt")
+data = utils.importData("Input/day14.txt")
 
 pillar = "#"
 rock = "O"

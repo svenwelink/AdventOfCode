@@ -3,8 +3,8 @@
 import pandas as pd
 import utils
 
-test = utils.importData("2023/TestInput/day07.txt")
-data = utils.importData("2023/Input/day07.txt")
+test = utils.importData("TestInput/day07.txt")
+data = utils.importData("Input/day07.txt")
 
 print("Day 7")
 

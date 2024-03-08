@@ -4,7 +4,7 @@ print("Day 13")
 import numpy as np
 import utils
 
-test = utils.importData("2023/TestInput/day13.txt")
+test = utils.importData("TestInput/day13.txt")
 data = utils.importData("2023/Input/day13.txt")
 
 def runPartOne(data):

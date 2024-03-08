@@ -4,8 +4,8 @@ print("Day 11")
 import numpy as np
 import utils
 
-test = utils.importData("2023/TestInput/day11.txt")
-data = utils.importData("2023/Input/day11.txt")
+test = utils.importData("TestInput/day11.txt")
+data = utils.importData("Input/day11.txt")
 
 def runPartOne(data):
     extraRows, extraColumns = getRowsToDouble(data), getColumnsToDouble(data)

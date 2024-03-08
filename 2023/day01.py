@@ -1,8 +1,8 @@
 # Day 1
 import utils
 
-test = utils.importData("2023/TestInput/day01.txt")
-data = utils.importData("2023/Input/day01.txt")
+test = utils.importData("TestInput/day01.txt")
+data = utils.importData("Input/day01.txt")
 
 def getFirstNumber(string):
     for i in range(0, len(string)):

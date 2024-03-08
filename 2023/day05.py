@@ -2,8 +2,8 @@ print("Day 5")
 # Import data
 import utils
 
-test = utils.importData("2023/TestInput/day05.txt")
-data = utils.importData("2023/Input/day05.txt")
+test = utils.importData("TestInput/day05.txt")
+data = utils.importData("Input/day05.txt")
 
 def removeSpacesList(list):
     list = ' '.join(list).split()

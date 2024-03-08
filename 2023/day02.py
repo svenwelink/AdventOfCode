@@ -1,8 +1,8 @@
 # Day 2
 import utils
 
-test = utils.importData("2023/TestInput/day02.txt")
-data = utils.importData("2023/Input/day02.txt")
+test = utils.importData("TestInput/day02.txt")
+data = utils.importData("Input/day02.txt")
 
 resetValue, nextValue = ";", ","
 

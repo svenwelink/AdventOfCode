@@ -2,8 +2,8 @@ print("Day 4")
 
 import utils
 
-test = utils.importData("2023/TestInput/day04.txt")
-data = utils.importData("2023/Input/day04.txt")
+test = utils.importData("TestInput/day04.txt")
+data = utils.importData("Input/day04.txt")
 
 print("Part 1")
 

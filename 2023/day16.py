@@ -3,8 +3,8 @@ print("Day 16")
 
 import utils
 
-test = utils.importData("2023/TestInput/day16.txt")
-data = utils.importData("2023/Input/day16.txt")
+test = utils.importData("TestInput/day16.txt")
+data = utils.importData("Input/day16.txt")
 
 def getLightFrame(dataFrame):
     newFrame = []

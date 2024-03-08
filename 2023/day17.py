@@ -3,8 +3,8 @@ print("Day 17")
 
 import utils
 
-test = utils.importData("2023/TestInput/day17.txt")
-data = utils.importData("2023/Input/day17.txt")
+test = utils.importData("TestInput/day17.txt")
+data = utils.importData("Input/day17.txt")
 
 def changeStringListToInterger(numberList):
     numberList = list(map(int, numberList))

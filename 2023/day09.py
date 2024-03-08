@@ -1,7 +1,7 @@
 import utils
 
-test = utils.importData("2023/TestInput/day09.txt")
-data = utils.importData("2023/Input/day09.txt")
+test = utils.importData("TestInput/day09.txt")
+data = utils.importData("Input/day09.txt")
 
 def getNextNumberList(inputList):
     if len(set(inputList)) == 1:
