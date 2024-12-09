@@ -39,3 +39,11 @@ def transposeList(frame):
       newRow += frame[rowId][columnId]
     transposedFrame.append(newRow)
   return(transposedFrame)
+
+def addPadding(df, sign="*"):
+  dfPadded, topPadding = [], sign*(len(df[0])+2)
+  dfPadded.append(topPadding)
+  for row in df:
+    dfPadded.append(sign + row + sign)
+  dfPadded.append(topPadding)
+  return dfPadded
