@@ -30,6 +30,27 @@ def runPartOne(data):
         
 print(runPartOne(input))
 
+def checkIfZeroIsPassed(timesZeroPassed, dialValue, amount):
+    # check if 0 is passed
+    if dialValue == 0:
+         timesZeroPassed += 1
+
+    elif dialValue < 0:
+    # if the value was previusly zero
+        if dialValue + amount == 0: 
+            timesZeroPassed += (dialValue * -1 // 100) 
+            dialValue = dialValue % 100
+        # if extra turns are done
+        else:
+            timesZeroPassed += dialValue * -1 // 100 + 1
+            dialValue = dialValue % 100
+                
+    elif dialValue > 99:
+        timesZeroPassed += dialValue // 100
+        dialValue = dialValue % 100
+
+    return(timesZeroPassed, dialValue)
+
 def runPartTwo(data):
     dialValue, timesZeroPassed = 50, 0
 
@@ -42,23 +63,8 @@ def runPartTwo(data):
         elif direction == "L":
             dialValue -= amount
 
-         # check if 0 is passed
-        if dialValue == 0:
-            timesZeroPassed += 1
-
-        elif dialValue < 0:
-            # if the value was previusly zero
-            if dialValue + amount == 0: 
-                timesZeroPassed += (dialValue * -1 // 100) 
-                dialValue = dialValue % 100
-            # if extra turns are done
-            else:
-                timesZeroPassed += dialValue * -1 // 100 + 1
-                dialValue = dialValue % 100
-                
-        elif dialValue > 99:
-            timesZeroPassed += dialValue // 100
-            dialValue = dialValue % 100
+        timesZeroPassed, dialValue = checkIfZeroIsPassed(timesZeroPassed, dialValue, amount)
 
     return(timesZeroPassed)
+
 print(runPartTwo(input))
