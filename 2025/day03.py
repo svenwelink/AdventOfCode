@@ -40,8 +40,8 @@ def getValueOfRowPartTwo(row):
         
         else:
             lastFoundNumber = max(valueList[(lastFoundNumberIndex):(len(valueList) - 11 + x + 1)])
-            lastFoundNumberIndex, valueList, totalNumberString = searchInList(valueList, lastFoundNumber, totalNumberString
-                                                                              )
+            lastFoundNumberIndex, valueList, totalNumberString = searchInList(valueList, lastFoundNumber, totalNumberString)
+            
     return int(totalNumberString)
 
 def turnListIntoString(lijst):
