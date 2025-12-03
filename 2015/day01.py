@@ -17,7 +17,8 @@ print(runPartOne(input))
 def runPartTwo(data, height=0):
     for i in range(len(data)):
         height += getTheRightFloor(data[i])
-        if height == -1: return i + 1
+        if height == -1: 
+            return i + 1
     return len(data)
 
 print(runPartTwo(input))
