@@ -19,25 +19,29 @@ def runPartOne(data):
         totalSum += getValueOfRow(row)
     return totalSum
 
-#print(runPartOne(input))
+print(runPartOne(input))
+
+def searchInList(valueList, numberToSearch, totalNumberString):
+    lastFoundNumberIndex = valueList.index(numberToSearch)
+    valueList[:lastFoundNumberIndex + 1] = [-1 for x in range(lastFoundNumberIndex)] # update list
+    totalNumberString += str(numberToSearch)
+    
+    return lastFoundNumberIndex, valueList, totalNumberString
 
 def getValueOfRowPartTwo(row):
     valueList = turnIntoList(row)
     lastFoundNumber = max(valueList[:-11]) # get max value from list excl last value
-    lastFoundNumberIndex = valueList.index(lastFoundNumber)
-    valueList[:lastFoundNumberIndex + 1] = [-1 for x in range(lastFoundNumberIndex)]# update list
-    totalNumberString = str(lastFoundNumber)
+    lastFoundNumberIndex, valueList, totalNumberString = searchInList(valueList, lastFoundNumber, "")
 
     for x in range(11):
         # if the amount of charachters left is the amount that needs to be added
-        if len(valueList[(lastFoundNumberIndex + 1):]) == (11 - x): 
-            return int(totalNumberString + turnListIntoString(valueList[(lastFoundNumberIndex + 1):]))
+        if len(valueList[(lastFoundNumberIndex):]) == (11 - x): 
+            return int(totalNumberString + turnListIntoString(valueList[(lastFoundNumberIndex):]))
         
         else:
             lastFoundNumber = max(valueList[(lastFoundNumberIndex):(len(valueList) - 11 + x + 1)])
-            lastFoundNumberIndex = valueList.index(lastFoundNumber)
-            valueList[:lastFoundNumberIndex + 1] = [-1 for x in range(lastFoundNumberIndex)] # update list
-            totalNumberString += str(lastFoundNumber)
+            lastFoundNumberIndex, valueList, totalNumberString = searchInList(valueList, lastFoundNumber, totalNumberString
+                                                                              )
     return int(totalNumberString)
 
 def turnListIntoString(lijst):
@@ -48,7 +52,6 @@ def turnListIntoString(lijst):
 def runPartTwo(data):
     totalSum = 0
     for row in data:
-        print(getValueOfRowPartTwo(row))
         totalSum += getValueOfRowPartTwo(row)
     return totalSum
 
