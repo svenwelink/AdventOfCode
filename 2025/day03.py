@@ -35,7 +35,7 @@ def getValueOfRowPartTwo(row):
 
     for x in range(11):
         # if the amount of charachters left is the amount that needs to be added
-        if len(valueList[(lastFoundNumberIndex):]) == (11 - x): 
+        if len(valueList[lastFoundNumberIndex:]) == (11 - x): 
             return int(totalNumberString + turnListIntoString(valueList[(lastFoundNumberIndex):]))
         
         else:
@@ -44,9 +44,9 @@ def getValueOfRowPartTwo(row):
             
     return int(totalNumberString)
 
-def turnListIntoString(lijst):
-    str_elements = [str(element) for element in lijst]
-    stringToReturn = "".join(str_elements)
+def turnListIntoString(xList):
+    strElements = [str(element) for element in xList]
+    stringToReturn = "".join(strElements)
     return stringToReturn
 
 def runPartTwo(data):
