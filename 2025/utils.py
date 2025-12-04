@@ -49,3 +49,8 @@ def addPaddingToFrame(data, sign= "0"):
     frameWithPadding.append(padddingRow)
     
     return frameWithPadding
+
+def stringAroundPositionIn2DList(df, pos):
+    topRow, middleRow, bottemRow = str(df[pos[0]-1][(pos[1]-1):(pos[1]+2)]), str(df[pos[0]][pos[1]-1]) + str(df[pos[0]][pos[1]+1]), str(df[pos[0]+1][(pos[1]-1):(pos[1]+2)])
+    fullString = topRow + middleRow + botomRow
+    return fullString
