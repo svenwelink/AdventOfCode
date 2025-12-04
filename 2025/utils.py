@@ -2,7 +2,7 @@ def importData(path):
     file = open(path,'r')
     data = file.readlines()
     file.close()
-    return(data)
+    return data
 
 def getRawFrame(data):
     frame = []
@@ -15,27 +15,17 @@ def getRawFrame(data):
                 rowFrame.append(row[j])
                 
         frame.append(rowFrame)
-    return(frame)
-
-def getStripedList(DataList):
-    newList = []
-    for i in DataList:
-      newList.append(i.strip())
-    return(newList)
-
-def removeSpacesList(list):
-    list = ' '.join(list).split()
-    return(list)
+    return frame
 
 def changeStringListToInterger(numberList):
     numberList = list(map(int, numberList))
-    return(numberList)
+    return numberList
 
 def getProductFromList(listProduct):
     product = 1
     for i in listProduct:
         product = product * i
-    return(product) 
+    return product)
 
 def transposeList(frame):
   transposedFrame = []
@@ -44,7 +34,7 @@ def transposeList(frame):
     for rowId in range(len(frame)):
       newRow += frame[rowId][columnId]
     transposedFrame.append(newRow)
-  return(transposedFrame)
+  return transposedFrame 
 
 def turnStringIntoList(row):
     return [row[x] for x in range(len(row))]
