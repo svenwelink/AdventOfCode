@@ -4,8 +4,7 @@ test = utils.importData("TestInput/day04.txt")
 input = utils.importData("Input/day04.txt")
 
 def turnStringIntoList(row):
-    rowList = [row[x] for x in range(len(row))]
-    return(rowList)
+    return [row[x] for x in range(len(row))]
 
 def prepDiagram(data):
     df = [x.strip().replace(".", "0").replace("@", "1") for x in data]
