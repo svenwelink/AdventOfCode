@@ -8,13 +8,13 @@ def isRollAccessible(df, pos):
         return False
     
     stringAroundPos = str(df[pos[0]-1][(pos[1]-1):(pos[1]+2)]) + str(df[pos[0]][pos[1]-1]) + str(df[pos[0]][pos[1]+1]) + str(df[pos[0]+1][(pos[1]-1):(pos[1]+2)])
-    if stringAroundPos.count("#") < 4:
+    if stringAroundPos.count("@") < 4:
         return True
 
     return False
 
 def runPartOne(data, totalCount = 0):
-    diagram = utils.addPaddingToFrame(data)
+    diagram = utils.addPaddingToFrame(data, sign=".")
     for x in range(1, len(diagram)-1): 
         for y in range(1, len(diagram[x])):
             if isRollAccessible(diagram, [x, y]):
@@ -25,7 +25,7 @@ def runPartOne(data, totalCount = 0):
 print(runPartOne(input))
 
 def runPartTwo(data, totalCount = 0, removedLastRound = 1):
-    diagram = utils.addPaddingToFrame(data)
+    diagram = utils.addPaddingToFrame(data, sign=".")
     while removedLastRound > 0:
         removedLastRound = 0
         for x in range(1, len(diagram)-1): 
