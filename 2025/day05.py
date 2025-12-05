@@ -69,7 +69,7 @@ def leftSideOverlap(used:rangeInstruction, toCheck:rangeInstruction):
                 return True
     return False
 
-def rightSideOverlap(used:rangeInstruction, toCheck:rangeInstruction): #5,10 2, 8
+def rightSideOverlap(used:rangeInstruction, toCheck:rangeInstruction):
     if used.lowestValue <= toCheck.highestValue:
         if used.highestValue >= toCheck.highestValue:
             if used.lowestValue > toCheck.lowestValue:
