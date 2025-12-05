@@ -25,7 +25,7 @@ def getProductFromList(listProduct):
     product = 1
     for i in listProduct:
         product = product * i
-    return product)
+    return product
 
 def transposeList(frame):
   transposedFrame = []
@@ -54,5 +54,5 @@ def stringAroundPositionIn2DList(df, pos):
     topRow = str(df[pos[0]-1][(pos[1]-1):(pos[1]+2)])
     middleRow = str(df[pos[0]][pos[1]-1]) + str(df[pos[0]][pos[1]+1])
     bottemRow = str(df[pos[0]+1][(pos[1]-1):(pos[1]+2)])
-    fullString = topRow + middleRow + botomRow
+    fullString = topRow + middleRow + bottemRow
     return fullString
