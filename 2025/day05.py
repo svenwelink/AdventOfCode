@@ -31,43 +31,99 @@ def runPartOne(data, freshCount = 0):
 
 print(runPartOne(input))
 
-def checkIfItemsDontOverlap(item1, item2, tryReverse = True):
-    if item1[0] < item2[0] and item1[1] < item2[0]:
+class rangeInstruction:
+    def __init__(self, values):
+        self.lowestValue = values[0]
+        self.highestValue = values[1]
+        self.needToDalculateLength = True
+        self.needsToBeSplit = False
+
+    def getLength(self):
+        if self.needToDalculateLength:
+            return self.highestValue - self.lowestValue + 1
+        else: return 0
+    
+    def changeHighest(self, newHighest):
+        self.highestValue = newHighest
+        
+    def changeLowest(self, newLowest):
+        self.lowestValue = newLowest
+    
+    def splitInTwo(self):
+        self.needsToBeSplit = True
+
+    def noCalculationNeeded(self):
+        self.needToDalculateLength = False
+
+def ItemsDontOverlap(item1:rangeInstruction, item2:rangeInstruction, tryReverse = True):
+    if item1.lowestValue < item2.lowestValue and item1.highestValue < item2.lowestValue:
         return True
     elif tryReverse:
-        return checkIfItemsDontOverlap(item2, item1, tryReverse = False)
+        return ItemsDontOverlap(item2, item1, tryReverse = False)
     return False
 
-def getRangeWithoutOverlap(used, new): # 10,14 - 12,18
-    nullValue = [0, -1]
-    if new == nullValue:
-        return nullValue
-    elif used[0] <= new[0] and used[1] >= new[0]: # 10,14 - 12,18
-        return [used[1]+1, new[1]]
-    elif used[0] <= new[1] and used[1] >= new[1]: # 16,20 - 12, 18
-        return [new[0], used[0] - 1]
-    elif used == new:
-        return nullValue
-    #WERKT NOG NIET GOED EN LELIJKE CODE
-    elif used[0] > new[0] and used[1] < new[1]:
-        return [[new[0], used[0] - 1] , used[1] + 1, new[1]]
-    return new
+def leftSideOverlap(used:rangeInstruction, toCheck:rangeInstruction):
+    if used.lowestValue <= toCheck.lowestValue:
+        if used.highestValue >= toCheck.lowestValue:
+            if used.highestValue < toCheck.highestValue:
+                return True
+    return False
+
+def rightSideOverlap(used:rangeInstruction, toCheck:rangeInstruction): #5,10 2, 8
+    if used.lowestValue <= toCheck.highestValue:
+        if used.highestValue >= toCheck.highestValue:
+            if used.lowestValue > toCheck.lowestValue:
+                return True
+    return False
+
+def instructionsAreFullyOverlapped(used:rangeInstruction, toCheck:rangeInstruction):
+    if used.lowestValue <= toCheck.lowestValue:
+        if used.highestValue >= toCheck.highestValue:
+            return True
+    return False
+
+def needToSplitNewRange(used:rangeInstruction, toCheck:rangeInstruction):
+    if used.lowestValue > toCheck.lowestValue:
+        if used.highestValue < toCheck.highestValue:
+            return True
+    return False
+
+def getRangeWithoutOverlap(used:rangeInstruction, toCheck:rangeInstruction):
+    if toCheck.needToDalculateLength == False:
+        return toCheck
+    elif ItemsDontOverlap(used, toCheck):
+        return toCheck
+    elif leftSideOverlap(used, toCheck):
+        toCheck.changeLowest(used.highestValue + 1)
+    elif rightSideOverlap(used, toCheck):
+        toCheck.changeHighest(used.lowestValue - 1)
+    elif instructionsAreFullyOverlapped(used, toCheck):
+        toCheck.noCalculationNeeded()
+    elif needToSplitNewRange(used, toCheck):
+        toCheck.splitInTwo()
+    return toCheck
+
+def splitNewRangeWithOldRange(used:rangeInstruction, toCheck:rangeInstruction):
+    range1 = rangeInstruction([toCheck.lowestValue, used.lowestValue - 1])
+    range2 = rangeInstruction([used.highestValue + 1, toCheck.highestValue])
+    return range1, range2
     
 def runPartTwo(data, freshCount = 0):
     ranges, checkedRangeList = prepData(data)[0], []
+    rangeObjects = [rangeInstruction(x) for x in ranges]
+    for instruction in rangeObjects:
+        if len(checkedRangeList) > 0:
+            for checked in checkedRangeList:
+                instruction = getRangeWithoutOverlap(checked, instruction)
 
-    for rangeList in ranges:
-        itemRanges = [rangeList] #[[3, 5], [7, 9]]
-
-        for checked in checkedRangeList:
-            for i in range(len(itemRanges)):
-                if checkIfItemsDontOverlap(checked, itemRanges[i]) == False:
-                    itemRanges[i] = getRangeWithoutOverlap(checked, itemRanges[i])
-
-        for rangeX in itemRanges:
-            freshCount += rangeX[1] - rangeX[0] + 1
-
-        checkedRangeList.append(rangeList)
+                if instruction.needsToBeSplit:
+                    instruction, instructionAddToList = splitNewRangeWithOldRange(checked, instruction)
+                    rangeObjects.append(instructionAddToList)
+        
+        checkedRangeList.append(instruction)
+        if instruction.needToDalculateLength:
+            freshCount += int(instruction.getLength())
+            
     return freshCount
 
 print(runPartTwo(input))
