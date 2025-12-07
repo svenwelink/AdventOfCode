@@ -33,7 +33,6 @@ class splitPoint:
         self.index = values[0]
         self.paths = values[1]
 
-
 def runPartTwo(data):
     pointsToSplit = [splitPoint([utils.turnStringIntoList(data[0]).index("S"), 1])]
 
