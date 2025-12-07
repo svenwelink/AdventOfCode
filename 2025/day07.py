@@ -33,27 +33,29 @@ class splitPoint:
         self.index = values[0]
         self.paths = values[1]
 
-def runPartTwo(data, totalPaths = 1):
-    pointsToSplit = [splitPoint([utils.turnStringIntoList(data[0]).index("S"), 1])]
-
-    for i in range(2, len(data), 2):
-        rowSplitters, newStreams = getIndexOfValues(data[i], "^"), []
-        for stream in pointsToSplit:
-            if stream.index in rowSplitters:
-                totalPaths += 1
-                newStreams.append(splitPoint([stream.index - 1, stream.paths]))
-                newStreams.append(splitPoint([stream.index + 1, stream.paths]))
-            else:
-                newStreams.append(stream)
-
-        pointsToSplit = []        
-        for stream in newStreams:
+def getNewStreamsToSplit(streams, pointsToSplit = []):
+    for stream in streams:
             if stream.index in [x.index for x in pointsToSplit]:
                 for x in pointsToSplit:
                     if x.index == stream.index:
                         x.paths += stream.paths
             else:
                 pointsToSplit.append(stream)
+    return pointsToSplit
+
+def runPartTwo(data):
+    pointsToSplit = [splitPoint([utils.turnStringIntoList(data[0]).index("S"), 1])]
+
+    for i in range(2, len(data), 2):
+        rowSplitters, newStreams = getIndexOfValues(data[i], "^"), []
+        for stream in pointsToSplit:
+            if stream.index in rowSplitters:
+                newStreams.append(splitPoint([stream.index - 1, stream.paths]))
+                newStreams.append(splitPoint([stream.index + 1, stream.paths]))
+            else:
+                newStreams.append(stream)
+
+        pointsToSplit = getNewStreamsToSplit(newStreams)       
 
     return(sum([x.paths for x in pointsToSplit]))
 
