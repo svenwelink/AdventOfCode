@@ -78,12 +78,6 @@ def runPartOne(data, connections, circuits = []):
 
 print(runPartOne(input, 1000))
 
-def getFinalresult(data, boxList, finalRound):
-    orgDistanceList = getAllDistinces(boxList)
-    lastIds = [orgDistanceList[finalRound - 1].id1, orgDistanceList[finalRound - 1].id2]
-    xValue1, xValue2 = data[lastIds[0]].strip().split(",")[0], data[lastIds[1]].strip().split(",")[0]
-    return int(xValue1) * int(xValue2)
-
 def checkForFinishCondition(circuits, round, length):
     if len(circuits) == 1 and round > 1:
         if len(circuits[0]) == length:
@@ -101,6 +95,6 @@ def runPartTwo(data, circuits = []):
             if checkForFinishCondition(circuits, round, len(data)):
                     notFinished = False
         round += 1
-    return getFinalresult(data, boxList, round)
+    return int(boxList[distList[round-1].id1].xValue) * int(boxList[distList[round-1].id2].xValue)
 
 print(runPartTwo(input))
