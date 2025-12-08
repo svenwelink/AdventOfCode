@@ -39,8 +39,8 @@ def findConnection(connection:boxConnection, connectBoxes, reverse = True):
         if connection.id1 in circuit:
             if connection.id2 in circuit:
                 return connectBoxes
-            else:
-                # if exists in another circuit
+            
+            else: # if exists in another circuit
                 for circuit2 in connectBoxes:
                     if connection.id2 in circuit2:
                         for id in circuit2:
@@ -78,21 +78,29 @@ def runPartOne(data, connections, circuits = []):
 
 print(runPartOne(input, 1000))
 
+def getFinalresult(data, boxList, finalRound):
+    orgDistanceList = getAllDistinces(boxList)
+    lastIds = [orgDistanceList[finalRound - 1].id1, orgDistanceList[finalRound - 1].id2]
+    xValue1, xValue2 = data[lastIds[0]].strip().split(",")[0], data[lastIds[1]].strip().split(",")[0]
+    return int(xValue1) * int(xValue2)
+
+def checkForFinishCondition(circuits, round, length):
+    if len(circuits) == 1 and round > 1:
+        if len(circuits[0]) == length:
+            return True
+    return False
+
 def runPartTwo(data, circuits = []):
     boxList = createJunctionBoxList(data)
     distList = getAllDistinces(boxList)
     round, notFinished = 0, True
+
     while notFinished:
         circuits = findConnection(distList[round], circuits)
         if notFinished:
-            if len(circuits) == 1 and round > 1:
-                if len(circuits[0]) == len(data):
+            if checkForFinishCondition(circuits, round, len(data)):
                     notFinished = False
         round += 1
-
-    orgDistanceList = getAllDistinces(boxList)
-    lastIds = [orgDistanceList[round - 1].id1, orgDistanceList[round - 1].id2]
-    xValue1, xValue2 = data[lastIds[0]].strip().split(",")[0], data[lastIds[1]].strip().split(",")[0]
-    return int(xValue1) * int(xValue2)
+    return getFinalresult(data, boxList, round)
 
 print(runPartTwo(input))
