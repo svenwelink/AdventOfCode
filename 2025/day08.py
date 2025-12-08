@@ -26,7 +26,8 @@ def calculateDist(box1:juctionBox, box2:juctionBox):
     dist = sqrt(abs(box1.xValue - box2.xValue)**2 + abs(box1.yValue - box2.yValue)**2 + abs(box1.zValue - box2.zValue)**2)
     return dist
 
-def createJunctionBoxList(data, dataList = []):
+def createJunctionBoxList(data):
+    dataList = []
     for id in range(len(data)):
         boxList = data[id].strip().split(",")
         dataList.append(juctionBox(boxList, id))
