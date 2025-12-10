@@ -1,5 +1,6 @@
 import utils
 from itertools import combinations
+from scipy.optimize import milp, Bounds, LinearConstraint
 
 test = utils.importData("TestInput/day10.txt")
 input = utils.importData("Input/day10.txt")
@@ -39,17 +40,16 @@ def translateInputStringToLPInput(string):
 def calculatCombination(combination):
     if len(combination) == 1:
         return combination[0]
-    newCombination = combination[0]
+    newCombination = combination[0].copy()
     for button in combination[1:]:
-        for id in range(len(combination)):
-            newCombination[id] += button[id]
+        for id in range(len(newCombination)):
+            newCombination[id] +=  button[id]
     return newCombination
 
 def combinationIsGood(solution, combination):
     for id in range(len(solution)):
         if combination[id] % 2 != solution[id]:
             return False
-    print(combination)
     return True
 
 def getCombinationIds(buttonList):
@@ -66,7 +66,6 @@ def getMinimumButtonPressesForSolution(solution, buttons):
         combination = [buttons[id] for id in combinationId]
         combinationSolution = calculatCombination(combination)
         if combinationIsGood(solution, combinationSolution):
-            print(combinationId)
             return len(combination)
     return len(solution)
 
@@ -74,9 +73,29 @@ def runPartOne(data):
     totalPresses = 0
     for i in data:
         solution, buttons = translateInputStringToLPInput(i)[:2]
-        print(getMinimumButtonPressesForSolution(solution, buttons))
         totalPresses += getMinimumButtonPressesForSolution(solution, buttons)
-
     return totalPresses
 
-print(runPartOne(test))
+print(runPartOne(input))
+
+def getSolutionPartTwo(solution, buttons):
+    countButtons = len(buttons)
+    transposedButtons = [list(x) for x in zip(*buttons)]
+
+    result = milp([1] * countButtons,
+              integrality=[1] * countButtons,
+              bounds=Bounds([0] * countButtons),
+              constraints=LinearConstraint(transposedButtons,
+                                            lb=solution, 
+                                            ub=solution)
+        )
+    return int(sum(result.x))
+
+def runPartTwo(data):
+    totalPresses = 0
+    for i in data:
+        buttons, solution = translateInputStringToLPInput(i)[1:]
+        totalPresses += getSolutionPartTwo(solution, buttons)
+    return totalPresses
+
+print(runPartTwo(input))
