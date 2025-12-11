@@ -10,11 +10,6 @@ class toSplitPoint:
         self.newPoints = values[1].strip().split(" ")
         self.splitIds = []
 
-class splitPoint:
-    def __init__(self, values):
-        self.index = values[0]
-        self.paths = values[1]
-
 def prepData(data):
     splitedList = [x.split(":") for x in data]
     objectList = [toSplitPoint(id, splitedList[id]) for id in range(len(splitedList))]
