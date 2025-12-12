@@ -1,6 +1,6 @@
 import utils
 
-test = [x.strip() for x in utils.importData("TestInput/day11.txt")]
+test = [x.strip() for x in utils.importData("TestInput/day11_2.txt")]
 input = [x.strip() for x in utils.importData("Input/day11.txt")]
 
 class toSplitPoint:
@@ -33,55 +33,47 @@ def runPartOne(data, inString = "you", outString = "out"):
 print(runPartOne(input))
 
 class path:
-    def __init__(self, pathList):
-        self.list = pathList
-
-    def lastNode(self):
-        return self.list[-1]
+    def __init__(self, name, pathCount):
+        self.name = name
+        self.pathCount = pathCount
     
-    def addPoint(self, point):
-        self.list.append(point)
-
-    def containsNoLoop(self):
-        if len(self.list) == len(list(set(self.list))):
-            return True
-        return False
-
+    def addExtraPoints(self, count):
+        self.pathCount += count
 
 def calculatePathsBetweenTwoPoints(data, inString = "you", outString = "out"):
-    pathsToCheck, totalPaths, roundCount= [path([inString])], 0, 0
-    while len(pathsToCheck) > 0 and roundCount < len(data):
-        print("Round: ", str(roundCount), " Paths to check: ", str(len(pathsToCheck)))
+    pathsToCheck, totalPaths, roundCount = [path(inString, 1)], 0, 0
+    while len(pathsToCheck) > 0:
         newPaths = []
-
         for pathToCheck in pathsToCheck:
-            newPoints = [x.newPoints for x in data if x.name == pathToCheck.lastNode()][0]
-            
-            for point in newPoints:
-                newPath = path(pathToCheck.list.copy())
-                
-                if point != outString and point != "out":
-                    newPath.addPoint(point)
-                    if newPath.containsNoLoop():
-                        newPaths.append(newPath)
-                elif point == outString:
-                    totalPaths += 1
+            newPoints = [x.newPoints for x in data if x.name == pathToCheck.name][0]
+        
+            for pointName in newPoints:
+                if pointName == outString:
+                    totalPaths += pathToCheck.pathCount
+
+                elif pointName == "out":
+                    pass
+
+                elif pointName != outString:
+                    if pointName in [x.name for x in newPaths]:
+                        index = [x.name for x in newPaths].index(pointName)
+                        newPaths[index].addExtraPoints(pathToCheck.pathCount)
+                    else:
+                        newPaths.append(path(pointName, pathToCheck.pathCount))
 
         pathsToCheck = newPaths
         roundCount += 1
+    
     return totalPaths
 
 def runPartTwo(data):
     toSplitPoint = prepData(data)
 
     dacToOut = calculatePathsBetweenTwoPoints(toSplitPoint, "dac", "out")
-    #fftToOut = calculatePathsBetweenTwoPoints(toSplitPoint, "fft", "out")
-    #dacToFft = calculatePathsBetweenTwoPoints(toSplitPoint, "dac", "fft")
     fftToDac = calculatePathsBetweenTwoPoints(toSplitPoint, "fft", "dac")
-    #svrToDac = calculatePathsBetweenTwoPoints(toSplitPoint, "svr", "dac")
     svrToFft = calculatePathsBetweenTwoPoints(toSplitPoint, "svr", "fft")
 
-    svrToOut = svrToFft * fftToDac * dacToOut #+ svrToDac * dacToFft * fftToOut
+    svrToOut = svrToFft * fftToDac * dacToOut
     return svrToOut
 
 print(runPartTwo(input))
