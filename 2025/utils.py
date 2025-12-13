@@ -1,69 +1,58 @@
-import utils
-
-test = utils.importData("TestInput/day06.txt")
-input = utils.importData("Input/day06.txt")
-
-def prepData(data):
-    data = [x.strip().split(" ") for x in data]
-    for x in range(len(data)):
-        if x == len(data) - 1:
-            data[x] = [y for y in data[x] if y != ""]
-        else:
-            data[x] = [y for y in data[x] if y != ""]
-    data = utils.transposeList(data)
+def importData(path):
+    file = open(path,'r')
+    data = file.readlines()
+    file.close()
     return data
 
-def mult(inst, mult = 1):
-    for i in range(len(inst) -1 ):
-        mult = int(mult) * int(inst[i])
-    return mult
+def getRawFrame(data):
+    frame = []
+    for i in range(len(data)):
+        rowFrame = []
+        row = r"{}".format(data[i]).strip()
+        
+        for j in range(len(row)):
+            if len(row[j]) > 0:
+                rowFrame.append(row[j])
+                
+        frame.append(rowFrame)
+    return frame
 
-def summation(inst, xSum = 0):
-    for i in range(len(inst) -1 ):
-        xSum += int(inst[i])
-    return xSum
+def changeStringListToInterger(numberList):
+    numberList = list(map(int, numberList))
+    return numberList
 
-def calulateSumOfPrepedData(prepedData, totalSum = 0):
-    for eqaution in prepedData:
-        if eqaution[-1] == "*":
-            totalSum += mult(eqaution)
-        elif eqaution[-1] == "+":
-            totalSum += summation(eqaution)
-    return totalSum
+def getProductFromList(listProduct):
+    product = 1
+    for i in listProduct:
+        product = product * i
+    return product
 
-def runPartOne(data):
-    data = prepData(data)
-    totalSum = calulateSumOfPrepedData(data)
-    return totalSum
+def transposeList(frame):
+  transposedFrame = []
+  for columnId in range(len(frame[0])):
+    newRow = ""
+    for rowId in range(len(frame)):
+      newRow += frame[rowId][columnId]
+    transposedFrame.append(newRow)
+  return transposedFrame 
 
-print(runPartOne(input))
+def turnStringIntoList(row):
+    return [row[x] for x in range(len(row))]
 
-def prepPartTwo(data, newData = [], newRow = []):
-    for i in range(len(data[0]) - 1):
-        newString = ""
-        for j in range(len(data)):
-            try:
-                if data[j][i] == "*" or data[j][i] == "+":
-                    sign = data[j][i]
-                else: newString += data[j][i]
-            except: # some list are longer
-                pass
-
-        if newString == " " * len(data):
-            newRow.append(sign)
-            newData.append(newRow)
-            newRow = []
-        else:
-            newRow.append(int(newString.strip(" ")))
+def addPaddingToFrame(data, sign= "0"):
+    df = [x.strip() for x in data]
+    padddingRow = turnStringIntoList(sign * (len(df[0]) + 2))
+    frameWithPadding = []
+    frameWithPadding.append(padddingRow)
+    for i in range(len(df)):
+        frameWithPadding.append(turnStringIntoList(sign + df[i] + sign))
+    frameWithPadding.append(padddingRow)
     
-    # add the last row
-    newRow.append(sign)
-    newData.append(newRow)
-    return newData
+    return frameWithPadding
 
-def runPartTwo(data):
-    data = prepPartTwo(data)
-    totalSum = calulateSumOfPrepedData(data)
-    return totalSum
-
-print(runPartTwo(input))
+def stringAroundPositionIn2DList(df, pos):
+    topRow = str(df[pos[0]-1][(pos[1]-1):(pos[1]+2)])
+    middleRow = str(df[pos[0]][pos[1]-1]) + str(df[pos[0]][pos[1]+1])
+    bottemRow = str(df[pos[0]+1][(pos[1]-1):(pos[1]+2)])
+    fullString = topRow + middleRow + bottemRow
+    return fullString
