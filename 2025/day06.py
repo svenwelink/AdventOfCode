@@ -9,18 +9,18 @@ def prepData(data):
         if x == len(data) - 1:
             data[x] = [y for y in data[x] if y != ""]
         else:
-            data[x] = [int(y) for y in data[x] if y != ""]
+            data[x] = [y for y in data[x] if y != ""]
     data = utils.transposeList(data)
     return data
 
 def mult(inst, mult = 1):
     for i in range(len(inst) -1 ):
-        mult = mult * inst[i]
+        mult = int(mult) * int(inst[i])
     return mult
 
 def summation(inst, xSum = 0):
     for i in range(len(inst) -1 ):
-        xSum += inst[i]
+        xSum += int(inst[i])
     return xSum
 
 def calulateSumOfPrepedData(prepedData, totalSum = 0):
